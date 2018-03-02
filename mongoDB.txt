@@ -1,0 +1,6 @@
+use checku
+db.createCollection('check');
+db.createCollection('pos');
+db.pos.insert( {"number":1,"timezone":-8});
+db.pos.insert( {"number":2,"timezone":0});
+db.pos.insert( {"number":3,"timezone":8});
