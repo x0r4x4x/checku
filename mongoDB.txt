@@ -4,3 +4,12 @@ db.createCollection('pos');
 db.pos.insert( {"number":1,"timezone":-8});
 db.pos.insert( {"number":2,"timezone":0});
 db.pos.insert( {"number":3,"timezone":8});
+
+
+//some thoughts
+db.check.aggregate([ { $group: { _id: "$checkPos", total: { $sum: "$checkAmount" } } } ]);
+db.check.aggregate([ { $group: { _id: { "checkPos": "$checkPos", "checkDate": "$checkDate" }, total: { $sum: "$checkAmount" } } } ]);
+db.check.aggregate([ { $group: { _id: { "checkPos": "$checkPos", "omg": { $dayOfMonth: "$checkDate" } } , total: { $sum: "$checkAmount" } } } ]);
+db.check.aggregate([ { $group: { _id: { "checkPos": "$checkPos", omg: { $dateFromString: {  dateString: '$checkDate', timezone: 'America/New_York'} } } , total: { $sum: "$checkAmount" } } } ]);
+omg: { $dateFromString: {  dateString: '$checkDate', timezone: 'America/New_York'} }
+
