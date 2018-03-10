@@ -18,7 +18,7 @@ function makeCheck( $checkNumber, $checkPos, $startDate, $offset )
      $check = array();
      $check['checkNumber'] = $checkNumber;
      $check['checkPos'] = $checkPos;
-     $check['checkDate'] = date( 'Y-m-d', strtotime( "+".$offset." day".$startDate))." ".leadZero(rand(6,22)).":".leadZero(rand(0,59)).":".leadZero(rand(0,59));
+     $check['checkDate'] = strtotime( "+".$offset." day".$startDate." ".leadZero(rand(6,22)).":".leadZero(rand(0,59)).":".leadZero(rand(0,59)));
      $check['checkAmount'] = rand(80,150);
      return json_encode( $check );
   }

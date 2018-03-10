@@ -22,8 +22,10 @@ if ( ! $channel = $connection->channel() )
 $channel = $connection->channel();
 
 $callback = function( $msg ) use( $mongoManager ) {
+   $tmp = json_decode( $msg->body, true );
+   $tmp['checkDate'] = new MongoDB\BSON\UTCDateTime( $tmp['checkDate']*1000 );
    $mongoBulk = new MongoDB\Driver\BulkWrite(['ordered' => true]);
-   $mongoBulk->insert( json_decode( $msg->body ) );
+   $mongoBulk->insert( $tmp );
    $mongoManager->executeBulkWrite( 'checku.check', $mongoBulk );
 };
 

@@ -8,7 +8,7 @@ db.pos.insert( {"number":3,"timezone":8});
 //
 DBQuery.shellBatchSize = 300
 
-//some thoughts
+//
 db.check.aggregate([ { $group: { _id: "$checkPos", total: { $sum: "$checkAmount" } } } ]);
 db.check.aggregate([ { $group: { _id: { "checkPos": "$checkPos", "checkDate": "$checkDate" }, total: { $sum: "$checkAmount" } } } ]);
 db.check.aggregate([ { $group: { _id: { "checkPos": "$checkPos", "omg": { $dayOfMonth: "$checkDate" } } , total: { $sum: "$checkAmount" } } } ]);
@@ -20,6 +20,13 @@ db.check.aggregate([
                      { $group: { _id: { "checkPos": "$checkPos", "month": { $substr: [ "$checkDate", 0, 7 ] } } , total: { $sum: "$checkAmount" } } },
                      { $sort: { "_id": 1 } }
                    ]);
+//
+db.check.aggregate([
+                     { $group: { _id: { "checkPos": "$checkPos", "month": { $dateToString: { format: "%Y-%m", date: "$checkDate" } } } , total: { $sum: "$checkAmount" } } },
+                     { $sort: { "_id": 1 } }
+                   ]);
+
+
 //2nd it works
 db.check.aggregate([ 
                      { $match: { checkDate: { $regex : /2016-01/ } } },
