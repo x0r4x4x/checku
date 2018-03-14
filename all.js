@@ -1,24 +1,3 @@
-/*$(document).ready(function(){
-  // var table = document.getElementById("maintable");
-   //$("table td").click(function(){
-         //var table = document.getElementById("maintable");
-         //alert( table.id );
-         if ( table != null )
-           {
-        //      alert( table.id );
-              for (var i = 0; i < table.rows.length; i++) 
-                {
-                   for (var j = 0; j < table.rows[i].cells.length; j++)
-                   table.rows[i].cells[j].onclick = function () 
-                     {
-                        tableText(this);
-                     };
-                }
-           }
-     //});
-});
-//}*/
-
 function tableText(tableCell) {
     alert(tableCell.innerHTML);
 }
@@ -32,9 +11,7 @@ function addCell( newRow, cellText ) {
 $(document).ready(function(){
    $("button").click(function(){
       $("#maintable tr").remove();
-
       $.getJSON("summary1.php", function(result){
-           //var body = document.body;
            var t = document.getElementById("maintable");
            var rI = 0;
            var cI = 1;
@@ -88,7 +65,6 @@ $(document).ready(function(){
                    }
                }
             }
-           //body.appendChild(t);
            if ( t != null )
              {
               for (var i = 0; i < t.rows.length; i++) 
@@ -98,7 +74,6 @@ $(document).ready(function(){
                      {
       $("#maintable tr").remove();
       $.getJSON("summary2.php?mydate=" + this.innerHTML, function(result){
-           //var body = document.body;
            var t = document.getElementById("maintable");
            var rI = 0;
            var cI = 1;
@@ -153,7 +128,6 @@ $(document).ready(function(){
                }
             }
     });
-                        //tableText(this);
                      };
                 }
              }

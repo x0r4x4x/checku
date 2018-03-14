@@ -6,7 +6,7 @@ $mongoManager = new MongoDB\Driver\Manager( $mongoUri );
 $summary = new MongoDB\Driver\Command([
     'aggregate' => 'check',
     'pipeline' => [
-       [ '$group' => [ '_id' => [ 'checkPos' => '$checkPos', 'month' => [ '$dateToString' => ['format' => '%Y-%m', 'date' => '$checkDate' ] ] ],'total' => [ '$sum' => '$checkAmount' ] ] ],
+       [ '$group' => [ '_id' => [ 'checkPos' => '$checkPos', 'month' => [ '$dateToString' => ['format' => '%Y-%m', 'date' => '$checkDate', 'timezone' => '+03' ] ] ],'total' => [ '$sum' => '$checkAmount' ] ] ],
        [ '$sort' => [ '_id' => 1 ] ]
     ],
     'cursor' => new stdClass,

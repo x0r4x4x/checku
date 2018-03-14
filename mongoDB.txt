@@ -33,3 +33,18 @@ db.check.aggregate([
                      { $group: { _id: { "checkPos": "$checkPos", "month": { $substr: [ "$checkDate", 0, 10 ] } } , total: { $sum: "$checkAmount" } } },
                      { $sort: { "_id": 1 } } 
                    ]);
+
+
+db.check.aggregate([
+                     { $group: { _id: { "checkPos": "$checkPos", "month": { $dateToString: { format: "%Y-%m", date: "$checkDate",timezone: "+08" } } }  , total: { $sum: "$checkAmount" } } },
+                                          { $lookup: {  from: "pos", localField: "_id.checkPos", foreignField: "number", as: "poses" } },
+                                                               { $sort: { "_id": 1 } }
+                                                                                  ]);
+
+                                                                                             db.check.aggregate([
+                                                                                                                          { $group: { _id: { "checkPos": "$checkPos", "month": { $dateToString: { format: "%Y-%m", date: "$checkDate",timezone: "+03" } } }  , total: { $sum: "$checkAmount" } } },
+                                                                                                                                               { $lookup: {  from: "pos", localField: "_id.checkPos", foreignField: "number", as: "poses" } },
+                                                                                                                                                                    { $sort: { "_id": 1 } }
+                                                                                                                                                                                         { $unwind }             
+                                                                                                                                                                                                              { $project : { "poses":  1  } }                     
+                                                                                                                                                                                                                                 ]);

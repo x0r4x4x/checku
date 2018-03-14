@@ -10,7 +10,7 @@ $summary = new MongoDB\Driver\Command([
     'aggregate' => 'check',
     'pipeline' => [
        [ '$match' => [ 'checkDate' => [ '$gte' => $startPeriod, '$lte'=> $endPeriod ] ] ],
-       [ '$group' => [ '_id' => [ 'checkPos' => '$checkPos', 'month' => [ '$dateToString' => ['format' => '%Y-%m-%d', 'date' => '$checkDate' ] ] ],'total' => [ '$sum' => '$checkAmount' ] ] ],
+       [ '$group' => [ '_id' => [ 'checkPos' => '$checkPos', 'month' => [ '$dateToString' => ['format' => '%Y-%m-%d', 'date' => '$checkDate', 'timezone' => '+03' ] ] ],'total' => [ '$sum' => '$checkAmount' ] ] ],
        [ '$sort' => [ '_id' => 1 ] ]
     ],
     'cursor' => new stdClass,

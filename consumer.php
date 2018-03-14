@@ -23,20 +23,6 @@ $channel = $connection->channel();
 
 $callback = function( $msg ) use( $mongoManager ) {
    $tmp = json_decode( $msg->body, true );
-   switch ($tmp['checkPos']) {
-    case 1:
-        date_default_timezone_set( 'Etc/GMT-8' );
-        break;
-    case 2:
-        date_default_timezone_set( 'Etc/GMT' );
-        break;
-    case 3:
-        date_default_timezone_set( 'Etc/GMT+8' );
-        break;
-    }
-
-
-
    $tmp['checkDate'] = new MongoDB\BSON\UTCDateTime( $tmp['checkDate']*1000 );
    $mongoBulk = new MongoDB\Driver\BulkWrite(['ordered' => true]);
    $mongoBulk->insert( $tmp );

@@ -1,7 +1,5 @@
 <?php
 
-
-
 require_once __DIR__ . '/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -22,7 +20,7 @@ function makeCheck( $checkNumber, $checkPos, $startDate, $offset )
      $check['checkPos'] = $checkPos;
      $check['checkDate'] = strtotime( "+".$offset." day".$startDate." ".leadZero(rand(6,22)).":".leadZero(rand(0,59)).":".leadZero(rand(0,59)));
      $check['checkAmount'] = rand(80,150);
-     file_put_contents( "prod.txt", $check['checkNumber']."\t".$check['checkPos']."\t".date("Y-m-d H:i:s" , $check['checkDate'] )."\t".$check['checkAmount']."\n" , FILE_APPEND );
+     //file_put_contents( "prod.txt", $check['checkNumber']."\t".$check['checkPos']."\t".date("Y-m-d H:i:s" , $check['checkDate'] )."\t".$check['checkAmount']."\n" , FILE_APPEND );
      return json_encode( $check );
   }
 
@@ -48,20 +46,19 @@ for ( $k=1;$k<=3;$k++ )
   {
     switch ($k) {
     case 1:
-        date_default_timezone_set( 'Etc/GMT-8' );
+        date_default_timezone_set( 'Etc/GMT+8' );
         break;
     case 2:
         date_default_timezone_set( 'Etc/GMT' );
         break;
     case 3:
-        date_default_timezone_set( 'Etc/GMT+8' );
+        date_default_timezone_set( 'Etc/GMT-8' );
         break;
     }
 
      for ( $i=0;$i<$days;$i++ )
        {
           $cnt = rand(400,800);
-          //$cnt = rand(1,2);
           for ( $j=1; $j<=$cnt; $j++ )
             {
                $message = new AMQPMessage( makeCheck( $j, $k, $startDate, $i ) );
